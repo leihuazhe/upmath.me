@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Upmath: Markdown & LaTeX Online Editor</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="LaTeX, Markdown, equations, markdown latex online editor, tikz, latex online">
+    <meta name="description"
+          content="Upmath helps writing math texts for the web. It converts Markdown syntax to HTML, and LaTeX equations to SVG images.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="//fonts.gstatic.com" crossorigin>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700"
+          rel="stylesheet" media="none" onload="if(media!='all')media='all'">
+
+    <link rel="stylesheet" href="/dist/css/style.min.css">
+
+    <link rel="preconnect" href="//i.upmath.me" crossorigin>
+    <link rel="prefetch" href="/i/latex.jpg" as=image>
+</head>
+
+<body>
+<div class="header">
+    <h1 class="header-item title">Markdown & LaTeX Editor</h1>
+    <div class="header-item open-control">
+        <input type="file" id="fileElem" style="display:none">
+        <button class="toolbar-button _upload-source" title="Upload a file">⇑</button>
+        <button class="toolbar-button _download-source" title="Download source">⇓</button>
+    </div>
+    <div class="header-item demo-control">
+        <input
+                class="control-input"
+                id="id_html"
+                type="radio"
+                name="source_type"
+                checked="checked">
+        <label
+                class="control-item"
+                for="id_html"
+                title="Example of rendered HTML"
+                data-result-as="html"
+        >preview</label><input
+            class="control-input"
+            id="id_src"
+            type="radio"
+            name="source_type"
+    ><label
+            class="control-item"
+            for="id_src"
+            title="HTML with img-equations"
+            data-result-as="src"
+    >html</label><input
+            class="control-input"
+            id="id_htmltex"
+            type="radio"
+            name="source_type"
+    ><label
+            class="control-item"
+            for="id_htmltex"
+            title="HTML with raw LaTeX equations"
+            data-result-as="htmltex"
+    >html-tex</label><input
+            class="control-input"
+            id="id_md"
+            type="radio"
+            name="source_type"
+    ><label
+            class="control-item"
+            for="id_md"
+            title="Markdown with img-equations"
+            data-result-as="md"
+    >md</label><input
+            class="control-input"
+            id="id_habr"
+            type="radio"
+            name="source_type"
+    ><label
+            class="control-item"
+            for="id_habr"
+            title="A kind of HTML markup for habr.com"
+            data-result-as="habr"
+    >H</label>
+        <button class="toolbar-button _download-result" title="Download result">⇓</button>
+    </div>
+    <div class="header-item copyright">
+        &copy; 2015–2022<br>
+        <a class="link" id="mailto-link" title="Drop me a line" href="#">Roman Parpalak</a>
+        <script>
+            document.getElementById('mailto-link').href = "mailto:roman%" + "40parpalak.com";
+        </script>
+    </div>
+</div>
+<div class="container full-height" id="container-block"><!--
+		-->
+    <div class="half-width full-height source-wrap" id="source-block"><textarea id="editor-source"
+                                                                                class="source full-height"></textarea>
+    </div><!--
+		-->
+    <div class="slider full-height" id="slider"></div><!--
+		-->
+    <div class="half-width full-height" id="result-block">
+        <div class="result-html full-height"></div>
+        <pre class="result-src full-height"><code class="result-src-content"></code></pre>
+    </div><!--
+	--></div>
+<script>
+    (function () {
+        try {
+            var data = localStorage.getItem("editor_content");
+        } catch (e) {
+        }
+        document.getElementById('editor-source').value = data || "# Upmath: Math Online Editor\n### _Create web articles and&nbsp;blog posts with&nbsp;equations and&nbsp;diagrams_\n\nUpmath extremely simplifies this task by using Markdown and LaTeX. It converts the Markdown syntax extended with LaTeX equations support into HTML code you can publish anywhere on the web.\n\n![Paper written in LaTeX](\/i\/latex.jpg)\n\n## Markdown\n\nDefinition from [Wikipedia](https:\/\/en.wikipedia.org\/wiki\/Markdown):\n\n> Markdown is a lightweight markup language with plain text formatting syntax designed so that it can be converted to HTML and many other formats using a tool by the same name. Markdown is often used to format readme files, for writing messages in online discussion forums, and to create rich text using a plain text editor.\n\nThe main idea of Markdown is to use a simple plain text markup. It's ~~hard~~ easy to __make__ **bold** _or_ *italic* text. Simple equations can be formatted with subscripts and superscripts: *E*~0~=*mc*^2^. I have added the LaTeX support: $$E_0=mc^2$$.\n\nAmong Markdown features are:\n\n* images (see above);\n* links: [service main page](\/ \"link title\");\n* code: `untouched equation source is *E*~0~=*mc*^2^`;\n* unordered lists--when a line starts with `+`, `-`, or `*`;\n  1. sub-lists\n  1. and ordered lists too;\n* direct use <nobr>of HTML<\/nobr>&ndash;for <span style=\"color: red\">anything else<\/span>. \n\nIn addition, Upmath supports typographic replacements: (c) (r) (tm) (p) +- !!!!!! ???? ,,  -- ---\n\n## LaTeX\n\nUpmath converts LaTeX equations in double-dollars `$$`: $$ax^2+bx+c=0$$. All equations are rendered as block equations. If you need inline ones, you can add the prefix `\\inline`: $$\\inline p={1\\over q}$$. Place big equations on separate lines:\n\n$$x_{1,2} = {-b\\pm\\sqrt{b^2 - 4ac} \\over 2a}.$$\n\nIn this case the LaTeX syntax will be highlighted in the source code. You can even add equation numbers (unfortunately there is no automatic numbering and refs support):\n\n$$|\\vec{A}|=\\sqrt{A_x^2 + A_y^2 + A_z^2}.$$(1)\n\nIt is possible to write Cyrillic symbols in `\\text` command: $$Q_\\text{плавления}>0$$.\n\nOne can use matrices:\n\n$$T^{\\mu\\nu}=\\begin{pmatrix}\n\\varepsilon&0&0&0\\\\\n0&\\varepsilon\/3&0&0\\\\\n0&0&\\varepsilon\/3&0\\\\\n0&0&0&\\varepsilon\/3\n\\end{pmatrix},$$\n\nintegrals:\n\n$$P_\\omega={n_\\omega\\over 2}\\hbar\\omega\\,{1+R\\over 1-v^2}\\int\\limits_{-1}^{1}dx\\,(x-v)|x-v|,$$\n\ncool tikz-pictures:\n\n$$\\usetikzlibrary{decorations.pathmorphing}\n\\begin{tikzpicture}[line width=0.2mm,scale=1.0545]\\small\n\\tikzset{>=stealth}\n\\tikzset{snake it\/.style={->,semithick,\ndecoration={snake,amplitude=.3mm,segment length=2.5mm,post length=0.9mm},decorate}}\n\\def\\h{3}\n\\def\\d{0.2}\n\\def\\ww{1.4}\n\\def\\w{1+\\ww}\n\\def\\p{1.5}\n\\def\\r{0.7}\n\\coordinate[label=below:$A_1$] (A1) at (\\ww,\\p);\n\\coordinate[label=above:$B_1$] (B1) at (\\ww,\\p+\\h);\n\\coordinate[label=below:$A_2$] (A2) at (\\w,\\p);\n\\coordinate[label=above:$B_2$] (B2) at (\\w,\\p+\\h);\n\\coordinate[label=left:$C$] (C1) at (0,0);\n\\coordinate[label=left:$D$] (D) at (0,\\h);\n\\draw[fill=blue!14](A2)--(B2)-- ++(\\d,0)-- ++(0,-\\h)--cycle;\n\\draw[gray,thin](C1)-- +(\\w+\\d,0);\n\\draw[dashed,gray,fill=blue!5](A1)-- (B1)-- ++(\\d,0)-- ++(0,-\\h)-- cycle;\n\\draw[dashed,line width=0.14mm](A1)--(C1)--(D)--(B1);\n\\draw[snake it](C1)--(A2) node[pos=0.6,below] {$c\\Delta t$};\n\\draw[->,semithick](\\ww,\\p+0.44*\\h)-- +(\\w-\\ww,0) node[pos=0.6,above] {$v\\Delta t$};\n\\draw[snake it](D)--(B2);\n\\draw[thin](\\r,0) arc (0:atan2(\\p,\\w):\\r) node[midway,right,yshift=0.06cm] {$\\theta$};\n\\draw[opacity=0](-0.40,-0.14)-- ++(0,5.06);\n\\end{tikzpicture}$$\n\nplots:\n\n$$\\begin{tikzpicture}[scale=1.0544]\\small\n\\begin{axis}[axis line style=gray,\n\tsamples=120,\n\twidth=9.0cm,height=6.4cm,\n\txmin=-1.5, xmax=1.5,\n\tymin=0, ymax=1.8,\n\trestrict y to domain=-0.2:2,\n\tytick={1},\n\txtick={-1,1},\n\taxis equal,\n\taxis x line=center,\n\taxis y line=center,\n\txlabel=$x$,ylabel=$y$]\n\\addplot[red,domain=-2:1,semithick]{exp(x)};\n\\addplot[black]{x+1};\n\\addplot[] coordinates {(1,1.5)} node{$y=x+1$};\n\\addplot[red] coordinates {(-1,0.6)} node{$y=e^x$};\n\\path (axis cs:0,0) node [anchor=north west,yshift=-0.07cm] {0};\n\\end{axis}\n\\end{tikzpicture}$$\n\nand [the rest of LaTeX features](https:\/\/en.wikibooks.org\/wiki\/LaTeX\/Mathematics).\n\n## About Upmath\n\n* Upmath works in browsers, except equations rendered [on the server](\/\/i.upmath.me\/).\n* Upmath stores your text in the browser to prevent the loss of your work in case of software or hardware failures.\n* You can copy or download the text and the code converted.\n* To print your documents just use the standard browser print dialog.\n\nI have designed and developed this lightweight editor and the service for converting LaTeX equations into svg-pictures to make publishing math texts on the web easy. I consider client-side rendering, the rival technique implemented in [MathJax](https:\/\/www.mathjax.org\/), to be too limited and resource-consuming, especially on mobile devices.\n\nThe source code is [published on Github](https:\/\/github.com\/parpalak\/upmath.me) under MIT license.\n\n***\n\nNow you can erase this instruction and start writing your own scientific post. If you want to see the instruction again, open the editor in a private tab, in a different browser or download and clear your post and refresh the page.\n\nHave a nice day :)\n\n[Roman Parpalak](https:\/\/parpalak.com\/), web developer and UX expert.\n";
+    }());
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        textareas = document.getElementsByTagName('textarea');
+        for (var i = 0; i < textareas.length; i++) {
+            textareas[i].style['padding-left'] = '13px';
+            textareas[i].style['padding-right'] = '13px';
+        }
+    }
+</script>
+<script src="./dist/js/vendors.min.js"></script>
+<script src="./dist/js/scripts.min.js"></script>
+<!-- 辅助JS -->
+<script src="./dist/js/markdown-it.min.js"></script>
+<script src="./dist/js/markdown-it-sub.min.js"></script>
+<script src="./dist/js/markdown-it-sup.min.js"></script>
+<script src="./dist/js/FileSaver.min.js"></script>
+<script src="./dist/js/draggabilly.pkgd.min.js"></script>
+<script src="./dist/js/TextareaDecorator.js"></script>
+<script src="./lib/highlight.js/highlight.pack.js"></script>
+
+<script src="./src/js/utils.js"></script>
+<script src="./src/js/markdown-it-s2-tex.js"></script>
+<script src="./src/js/parser.js"></script>
+<script src="./src/js/editor.js"></script>
+
+</body>
+</html>
