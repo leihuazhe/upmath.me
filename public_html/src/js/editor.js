@@ -521,15 +521,15 @@
 
 		// Interface element listeners
 
-		document.querySelector('._download-source').addEventListener('click', function () {
-			var blob = new Blob([parserCollection.getSource()], {type: 'text/markdown;charset=utf-8'});
-			saveAs(blob, 'source.md');
-		});
-
-		document.querySelector('._download-result').addEventListener('click', function () {
-			var blob = new Blob([parserCollection.getDisplayedResult()], {type: 'text/html;charset=utf-8'});
-			saveAs(blob, parserCollection.getDisplayedResultFilename());
-		});
+		// document.querySelector('._download-source').addEventListener('click', function () {
+		// 	var blob = new Blob([parserCollection.getSource()], {type: 'text/markdown;charset=utf-8'});
+		// 	saveAs(blob, 'source.md');
+		// });
+		//
+		// document.querySelector('._download-result').addEventListener('click', function () {
+		// 	var blob = new Blob([parserCollection.getDisplayedResult()], {type: 'text/html;charset=utf-8'});
+		// 	saveAs(blob, parserCollection.getDisplayedResultFilename());
+		// });
 
 		document.querySelector('._upload-source').addEventListener('click', function () {
 			var eNode = document.getElementById('fileElem');
